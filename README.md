@@ -80,6 +80,3 @@ http://127.0.0.1:8080/EcoBite.html
 - `dashboard.html`: Hotel partner dashboard
 - `cart.html`: Cart and checkout page
 
-## Notes
-
-This is currently a frontend-only project. Data is stored in JavaScript arrays and browser `localStorage`. For a stronger placement-level version, the next upgrade would be adding a backend API, database, authentication, and deployment.
