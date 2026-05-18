@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoBite – Cart & Checkout</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="css/cart.css" />
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav id="navbar">
+    <div id="navbox">
+      <a href="EcoBite.html" id="logo">🌿 Eco<span>Bite</span></a>
+
+      <!-- Breadcrumb trail shows where user is in checkout flow -->
+      <div id="crumb">
+        <span class="crumbstep on" id="step1">🛒 Cart</span>
+        <span class="crumbarrow">›</span>
+        <span class="crumbstep" id="step2">📋 Details</span>
+        <span class="crumbarrow">›</span>
+        <span class="crumbstep" id="step3">💳 Payment</span>
+        <span class="crumbarrow">›</span>
+        <span class="crumbstep" id="step4">✅ Done</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══ MAIN PAGE ══ -->
+  <div id="page">
+
+    <!-- ════ LEFT COLUMN ════ -->
+    <div id="left">
+
+      <div class="sectitle">🛒 Your Cart (<span id="itemcount">3</span> items)</div>
+
+      <!-- Cart items — filled by JS -->
+      <div id="cartlist"></div>
+
+      <!-- Empty cart message — hidden unless cart is empty -->
+      <div id="empty">
+        <div class="eicon">🍽️</div>
+        <p>Your cart is empty! Find great deals and add some food.</p>
+        <button id="shopbtn" onclick="window.location.href='EcoBite.html'">
+          Browse Food Deals →
+        </button>
+      </div>
+
+      <!-- ── PICKUP DETAILS FORM ── -->
+      <div id="pickup">
+        <h3>📍 Your Pickup Details</h3>
+
+        <!-- Name row — two inputs side by side -->
+        <div class="prow">
+          <div class="pgroup">
+            <label>First Name</label>
+            <input type="text" id="pfname" placeholder="Rahul" />
+            <div class="perr" id="err-pfname">Enter your first name</div>
+          </div>
+          <div class="pgroup">
+            <label>Last Name</label>
+            <input type="text" id="plname" placeholder="Sharma" />
+          </div>
+        </div>
+
+        <!-- Phone number -->
+        <div class="pgroup">
+          <label>Phone Number</label>
+          <input type="tel" id="pphone" placeholder="9876543210" maxlength="10" />
+          <div class="perr" id="err-pphone">Enter a valid 10-digit number</div>
+        </div>
+
+        <!-- Email -->
+        <div class="pgroup">
+          <label>Email (for order confirmation)</label>
+          <input type="email" id="pemail" placeholder="rahul@example.com" />
+          <div class="perr" id="err-pemail">Enter a valid email address</div>
+        </div>
+
+        <!-- Pickup time slot -->
+        <div class="pgroup">
+          <label>Preferred Pickup Time</label>
+          <select id="ptime">
+            <option value="">Choose a time slot...</option>
+            <option>8:00 PM – 8:30 PM</option>
+            <option>8:30 PM – 9:00 PM</option>
+            <option>9:00 PM – 9:30 PM</option>
+            <option>9:30 PM – 10:00 PM</option>
+            <option>10:00 PM – 10:30 PM</option>
+          </select>
+          <div class="perr" id="err-ptime">Please choose a pickup time</div>
+        </div>
+      </div>
+
+    </div><!-- end #left -->
+
+    <!-- ════ RIGHT COLUMN ════ -->
+    <div id="right">
+
+      <!-- ── ORDER SUMMARY ── -->
+      <div id="summary">
+        <h3>🧾 Order Summary</h3>
+
+        <!-- These values are updated by JS -->
+        <div class="sline">
+          <span id="itemlabel">3 items</span>
+          <span id="subtotal">₹327</span>
+        </div>
+        <div class="sline">
+          <span>Delivery</span>
+          <span style="color:#2d9b5a; font-weight:600">FREE 🎉</span>
+        </div>
+        <div class="sline">
+          <span>Platform Fee</span>
+          <span>₹5</span>
+        </div>
+
+        <hr class="sdiv"/>
+
+        <!-- Total -->
+        <div class="sline bold">
+          <span>Total to Pay</span>
+          <span id="total">₹332</span>
+        </div>
+
+        <!-- Savings highlight -->
+        <div id="savings">
+          <span>🌿</span>
+          <span>You're saving <b id="savingamt">₹860</b> vs original price!</span>
+        </div>
+
+        <!-- Coupon code box -->
+        <div id="couponbox">
+          <input type="text" id="couponinput" placeholder="Enter coupon code" />
+          <button id="applybtn" onclick="applyCoupon()">Apply</button>
+        </div>
+        <div id="couponmsg"></div>
+
+      </div><!-- end #summary -->
+
+      <!-- ── PAYMENT METHOD ── -->
+      <div id="payment">
+        <h3>💳 Payment Method</h3>
+
+        <!-- UPI option -->
+        <div class="payopt on" id="pay-upi" onclick="selectPay('upi')">
+          <span class="payicon">📱</span>
+          <div>
+            <div class="payname">UPI Payment</div>
+            <div class="paysub">GPay, PhonePe, Paytm</div>
+          </div>
+          <div class="radio"></div>
+        </div>
+
+        <!-- Card option -->
+        <div class="payopt" id="pay-card" onclick="selectPay('card')">
+          <span class="payicon">💳</span>
+          <div>
+            <div class="payname">Credit / Debit Card</div>
+            <div class="paysub">Visa, Mastercard, RuPay</div>
+          </div>
+          <div class="radio"></div>
+        </div>
+
+        <!-- Cash option -->
+        <div class="payopt" id="pay-cash" onclick="selectPay('cash')">
+          <span class="payicon">💵</span>
+          <div>
+            <div class="payname">Cash at Pickup</div>
+            <div class="paysub">Pay when you collect</div>
+          </div>
+          <div class="radio"></div>
+        </div>
+
+      </div><!-- end #payment -->
+
+      <!-- Place Order button -->
+      <button id="orderbtn" onclick="placeOrder()">
+        🛒 Place Order — <span id="btnamt">₹332</span>
+      </button>
+      <div id="secure">🔒 100% Secure Checkout &nbsp;|&nbsp; No hidden charges</div>
+
+    </div><!-- end #right -->
+
+  </div><!-- end #page -->
+
+  <!-- ══ SUCCESS SCREEN ══ -->
+  <!-- Covers the whole page after order is placed -->
+  <div id="success">
+    <div id="successbox">
+      <div class="sicon">🎉</div>
+      <h2>Order Placed!</h2>
+      <p>Your food rescue order is confirmed. Head to the hotel at your pickup time!</p>
+
+      <!-- Order details shown after success -->
+      <div id="orderinfo">
+        <div class="oline"><span>Order ID</span><b id="oid">#EB2048</b></div>
+        <div class="oline"><span>Total Paid</span><b id="opaid">₹332</b></div>
+        <div class="oline"><span>Pickup Time</span><b id="otime">9:00 PM – 9:30 PM</b></div>
+        <div class="oline"><span>Payment</span><b id="opay">UPI</b></div>
+        <div class="oline"><span>Food Saved</span><b style="color:#2d9b5a">🌍 ~1.2 kg CO₂ reduced</b></div>
+      </div>
+
+      <button id="backhome" onclick="window.location.href='EcoBite.html'">
+        🏠 Back to Home
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ TOAST ══ -->
+  <div id="toast">
+    <span id="ticon">✅</span>
+    <span id="tmsg">Item removed from cart</span>
+  </div>
+
+  <script src="js/cart.js"></script>
+</body>
+</html>

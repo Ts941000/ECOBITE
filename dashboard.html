@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoBite – Hotel Dashboard</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+  <!-- ══ MOBILE HEADER ══ -->
+  <div id="mobileHeader">
+    <a href="EcoBite.html">🌿 Eco<span>Bite</span></a>
+    <button id="mHamburger" onclick="toggleSidebar()">☰</button>
+  </div>
+  <div id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- ══════════ SIDEBAR ══════════ -->
+  <div id="sidebar">
+
+    <!-- Logo -->
+    <a href="EcoBite.html" id="slogo">🌿 Eco<span>Bite</span></a>
+
+    <!-- Hotel info -->
+    <div id="hotelinfo">
+      <div id="hotelname">🏨 Taj Palace Hotel</div>
+      <span id="hotelbadge">✅ Verified Partner</span>
+    </div>
+
+    <!-- Navigation menu -->
+    <div id="menu">
+      <a class="menuitem on" data-panel="overview" href="#" onclick="openPanel('overview'); if(window.innerWidth<=768)toggleSidebar();">
+        <span class="menuicon">📊</span> Overview
+      </a>
+      <a class="menuitem" data-panel="listings" href="#" onclick="openPanel('listings'); if(window.innerWidth<=768)toggleSidebar();">
+        <span class="menuicon">🍛</span> My Listings
+      </a>
+      <a class="menuitem" data-panel="add" href="#" onclick="openPanel('add'); if(window.innerWidth<=768)toggleSidebar();">
+        <span class="menuicon">➕</span> Add Listing
+      </a>
+      <a class="menuitem" data-panel="orders" href="#" onclick="openPanel('orders'); if(window.innerWidth<=768)toggleSidebar();">
+        <span class="menuicon">📦</span> Orders
+      </a>
+      <a class="menuitem" href="#">
+        <span class="menuicon">⚙️</span> Settings
+      </a>
+    </div>
+
+    <!-- Logout -->
+    <div id="logout">
+      <button id="logoutbtn" onclick="window.location.href='login.html'">
+        🚪 Logout
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ══════════ MAIN CONTENT ══════════ -->
+  <div id="main">
+
+    <!-- Top bar -->
+    <div id="topbar">
+      <div>
+        <div id="pagetitle">Overview</div>
+        <div id="pagesub">Welcome back! Here's what's happening today.</div>
+      </div>
+      <!-- Add listing button -->
+      <button id="addbtn" onclick="openPanel('add')">
+        ➕ Add New Listing
+      </button>
+    </div>
+
+    <!-- ── STAT CARDS ── -->
+    <div id="cards">
+      <div class="card">
+        <div class="cardicon">🍛</div>
+        <div class="cardnum" id="totallistings">6</div>
+        <div class="cardlabel">Active Listings</div>
+        <div class="cardup" style="color:#2d9b5a">↑ 2 added this week</div>
+      </div>
+      <div class="card">
+        <div class="cardicon">📦</div>
+        <div class="cardnum" id="totalorders">34</div>
+        <div class="cardlabel">Orders Today</div>
+        <div class="cardup" style="color:#2d9b5a">↑ 12 since yesterday</div>
+      </div>
+      <div class="card">
+        <div class="cardicon">💰</div>
+        <div class="cardnum">₹4,280</div>
+        <div class="cardlabel">Revenue Today</div>
+        <div class="cardup" style="color:#2d9b5a">↑ 18% vs yesterday</div>
+      </div>
+      <div class="card">
+        <div class="cardicon">♻️</div>
+        <div class="cardnum">28 kg</div>
+        <div class="cardlabel">Food Saved Today</div>
+        <div class="cardup" style="color:#4fcb7a">🌍 Great job!</div>
+      </div>
+    </div>
+
+    <!-- ── PANEL TABS ── -->
+    <div id="sections">
+      <button class="sec on" id="sec-overview" onclick="openPanel('overview')">📊 Overview</button>
+      <button class="sec"    id="sec-listings" onclick="openPanel('listings')">🍛 My Listings</button>
+      <button class="sec"    id="sec-add"      onclick="openPanel('add')">➕ Add Listing</button>
+      <button class="sec"    id="sec-orders"   onclick="openPanel('orders')">📦 Orders</button>
+    </div>
+
+    <!-- ════════════════════════════════
+         PANEL 1: OVERVIEW
+    ════════════════════════════════ -->
+    <div class="panel show" id="panel-overview">
+
+      <!-- Quick summary cards -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+
+        <!-- Recent activity list -->
+        <div style="background:white; border-radius:16px; padding:24px; border:1px solid #dceadc;">
+          <div style="font-family:'Syne',sans-serif; font-size:18px; font-weight:800; margin-bottom:18px;">📋 Recent Activity</div>
+          <div id="activity"></div>
+        </div>
+
+        <!-- Top selling items -->
+        <div style="background:white; border-radius:16px; padding:24px; border:1px solid #dceadc;">
+          <div style="font-family:'Syne',sans-serif; font-size:18px; font-weight:800; margin-bottom:18px;">🏆 Top Selling Items</div>
+          <div id="topsell"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         PANEL 2: MY LISTINGS TABLE
+    ════════════════════════════════ -->
+    <div class="panel" id="panel-listings">
+
+      <div id="table">
+        <!-- Table header row -->
+        <div id="tablehead">
+          <div></div>
+          <div>Item Name</div>
+          <div>Price</div>
+          <div>Qty Left</div>
+          <div>Pickup Time</div>
+          <div>Status</div>
+          <div>Actions</div>
+        </div>
+        <!-- Table rows filled by JS -->
+        <div id="rows"></div>
+      </div>
+
+    </div>
+
+    <!-- ════════════════════════════════
+         PANEL 3: ADD NEW LISTING FORM
+    ════════════════════════════════ -->
+    <div class="panel" id="panel-add">
+      <div id="addform">
+        <h3>Add New Food Listing</h3>
+        <p>List your surplus food for tonight's rescue deals</p>
+
+        <!-- Emoji picker -->
+        <div class="fgroup" style="margin-bottom:18px;">
+          <label>Pick an Emoji for your dish</label>
+          <div id="emojipicker">
+            <!-- Each emoji is a clickable button -->
+            <div class="epick on" onclick="pickEmoji(this)">🍛</div>
+            <div class="epick"    onclick="pickEmoji(this)">🍚</div>
+            <div class="epick"    onclick="pickEmoji(this)">🍢</div>
+            <div class="epick"    onclick="pickEmoji(this)">🥘</div>
+            <div class="epick"    onclick="pickEmoji(this)">🫕</div>
+            <div class="epick"    onclick="pickEmoji(this)">🥗</div>
+            <div class="epick"    onclick="pickEmoji(this)">🍜</div>
+            <div class="epick"    onclick="pickEmoji(this)">🥙</div>
+          </div>
+        </div>
+
+        <!-- Form inputs in 2-column grid -->
+        <div class="fgrid">
+
+          <!-- Dish Name — spans full width -->
+          <div class="fgroup full">
+            <label>Dish Name</label>
+            <input type="text" id="fname" placeholder="e.g. Butter Chicken Thali" />
+            <div class="ferr" id="ferr-name">Please enter the dish name</div>
+          </div>
+
+          <!-- Original Price -->
+          <div class="fgroup">
+            <label>Original Price (₹)</label>
+            <input type="number" id="foriginal" placeholder="e.g. 450" />
+            <div class="ferr" id="ferr-original">Enter original price</div>
+          </div>
+
+          <!-- Sale Price -->
+          <div class="fgroup">
+            <label>Sale Price (₹)</label>
+            <input type="number" id="fsale" placeholder="e.g. 99" />
+            <div class="ferr" id="ferr-sale">Sale price must be less than original</div>
+          </div>
+
+          <!-- Quantity -->
+          <div class="fgroup">
+            <label>Quantity Available</label>
+            <input type="number" id="fqty" placeholder="e.g. 12" />
+            <div class="ferr" id="ferr-qty">Enter quantity (min 1)</div>
+          </div>
+
+          <!-- Food Type -->
+          <div class="fgroup">
+            <label>Food Type</label>
+            <select id="ftype">
+              <option value="">Select type...</option>
+              <option value="Veg">🟢 Vegetarian</option>
+              <option value="NonVeg">🔴 Non-Vegetarian</option>
+            </select>
+            <div class="ferr" id="ferr-type">Please select food type</div>
+          </div>
+
+          <!-- Pickup Time -->
+          <div class="fgroup full">
+            <label>Pickup Time Window</label>
+            <input type="text" id="ftime" placeholder="e.g. 8:00 PM – 9:30 PM" />
+          </div>
+
+          <!-- Description — spans full width -->
+          <div class="fgroup full">
+            <label>Short Description (optional)</label>
+            <textarea id="fdesc" placeholder="e.g. Freshly made dal makhani with naan and rice..."></textarea>
+          </div>
+
+        </div>
+
+        <!-- Submit button -->
+        <button id="savebtn" onclick="saveListing()">✅ Save Listing</button>
+
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         PANEL 4: ORDERS
+    ════════════════════════════════ -->
+    <div class="panel" id="panel-orders">
+      <div id="orderlist"></div>
+    </div>
+
+  </div><!-- end #main -->
+
+  <!-- ══ TOAST NOTIFICATION ══ -->
+  <div id="toast">
+    <span id="toasticon">✅</span>
+    <span id="toastmsg">Listing saved successfully!</span>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

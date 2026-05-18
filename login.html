@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoBite – Login / Signup</title>
+
+  <!-- Google Fonts: Syne for headings, DM Sans for body text -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+
+  <!-- ══════════ LEFT PANEL ══════════ -->
+  <div id="left">
+    <div id="blob"></div>
+
+    <!-- Logo -->
+    <a href="EcoBite.html" id="logo">🌿 Eco<span>Bite</span></a>
+
+    <!-- Headline -->
+    <h1 id="slogan">
+      Save Food.<br>
+      <span>Save Money.</span><br>
+      Save the Planet.
+    </h1>
+
+    <!-- Description -->
+    <p id="desc">
+      Join thousands of Indians who order surplus meals
+      from top hotels at up to 80% off — every day.
+    </p>
+
+    <!-- Three feature bullet points -->
+    <div id="points">
+      <div class="point">
+        <div class="picon">🍛</div>
+        <span class="ptext">Meals from 5-star hotels starting ₹59</span>
+      </div>
+      <div class="point">
+        <div class="picon">🌍</div>
+        <span class="ptext">32 cities across India</span>
+      </div>
+      <div class="point">
+        <div class="picon">♻️</div>
+        <span class="ptext">2.4 lakh+ meals rescued so far</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ RIGHT PANEL ══════════ -->
+  <div id="right">
+    <div id="box">
+
+      <!-- Tab switcher: Login vs Signup -->
+      <div id="tabs">
+        <button class="tab on" id="logintab" onclick="show('login')">Login</button>
+        <button class="tab"    id="signuptab" onclick="show('signup')">Sign Up</button>
+      </div>
+
+      <!-- Dynamic title — changes based on active tab -->
+      <h2 id="formtitle">Welcome Back!</h2>
+      <p  id="formsub">Login to find today's food deals near you</p>
+
+      <!-- ══ LOGIN FORM ══ -->
+      <form id="loginform" class="show" onsubmit="validate(event, 'login')">
+
+        <!-- Role selector for login: User or Hotel -->
+        <div id="loginroles" style="display:flex; gap:12px; margin-bottom:20px;">
+          <div class="role on" id="luserrole" onclick="pickLogin('user')" style="flex:1; padding:12px; border:2px solid #d8ead8; border-radius:12px; text-align:center; cursor:pointer; background:#f9fdf9; transition:all 0.2s;">
+            <div style="font-size:22px; margin-bottom:4px;">🙋</div>
+            <div style="font-size:13px; font-weight:600; color:#3a4e3a;">I'm a User</div>
+          </div>
+          <div class="role" id="lhotelrole" onclick="pickLogin('hotel')" style="flex:1; padding:12px; border:2px solid #d8ead8; border-radius:12px; text-align:center; cursor:pointer; background:#f9fdf9; transition:all 0.2s;">
+            <div style="font-size:22px; margin-bottom:4px;">🏨</div>
+            <div style="font-size:13px; font-weight:600; color:#3a4e3a;">I'm a Hotel</div>
+          </div>
+        </div>
+
+        <!-- Email input -->
+        <div class="group">
+          <label for="lemail">Email Address</label>
+          <div class="inputwrap">
+            <span>📧</span>
+            <input type="email" id="lemail" placeholder="you@example.com" />
+          </div>
+          <div class="err" id="emailerr">Please enter a valid email</div>
+        </div>
+
+        <!-- Password input -->
+        <div class="group">
+          <label for="lpass">Password</label>
+          <div class="inputwrap">
+            <span>🔒</span>
+            <input type="password" id="lpass" placeholder="Enter your password" />
+            <!-- Eye button toggles password visibility -->
+            <button type="button" class="eye" onclick="toggle('lpass', this)">👁</button>
+          </div>
+          <div class="err" id="passerr">Password must be at least 6 characters</div>
+        </div>
+
+        <!-- Forgot password link -->
+        <div id="forgot"><a href="#">Forgot Password?</a></div>
+
+        <!-- Submit button -->
+        <button class="submit" type="submit">Login to EcoBite</button>
+
+        <!-- OR divider -->
+        <div class="divider">or</div>
+
+        <!-- Google button -->
+        <button type="button" class="google" onclick="alert('Google login coming soon!')">
+          <span style="font-size:20px">🌐</span> Continue with Google
+        </button>
+
+      </form>
+
+      <!-- ══ SIGNUP FORM ══ -->
+      <form id="signupform" onsubmit="validate(event, 'signup')">
+
+        <!-- Role selector: User or Hotel -->
+        <div id="roles">
+          <div class="role on" id="userrole" onclick="pick('user')">
+            <div class="ricon">🙋</div>
+            <div class="rname">I'm a User</div>
+          </div>
+          <div class="role" id="hotelrole" onclick="pick('hotel')">
+            <div class="ricon">🏨</div>
+            <div class="rname">I'm a Hotel</div>
+          </div>
+        </div>
+
+        <!-- First name and Last name side by side -->
+        <div class="row">
+          <div class="group">
+            <label for="fname">First Name</label>
+            <div class="inputwrap">
+              <span>👤</span>
+              <input type="text" id="fname" placeholder="Rahul" />
+            </div>
+            <div class="err" id="fnameerr">Enter your first name</div>
+          </div>
+          <div class="group">
+            <label for="lname">Last Name</label>
+            <div class="inputwrap">
+              <span>👤</span>
+              <input type="text" id="lname" placeholder="Sharma" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Email input -->
+        <div class="group">
+          <label for="semail">Email Address</label>
+          <div class="inputwrap">
+            <span>📧</span>
+            <input type="email" id="semail" placeholder="you@example.com" />
+          </div>
+          <div class="err" id="semailerr">Please enter a valid email</div>
+        </div>
+
+        <!-- Phone number input -->
+        <div class="group">
+          <label for="phone">Phone Number</label>
+          <div class="inputwrap">
+            <span>📱</span>
+            <!-- +91 prefix is fixed text, input is for the number -->
+            <span style="color:#aaa; font-size:14px; padding-right:6px; border-right:1px solid #ddd; margin-right:8px;">+91</span>
+            <input type="tel" id="phone" placeholder="9876543210" maxlength="10" />
+          </div>
+          <div class="err" id="phoneerr">Enter a valid 10-digit number</div>
+        </div>
+
+        <!-- Password input -->
+        <div class="group">
+          <label for="spass">Create Password</label>
+          <div class="inputwrap">
+            <span>🔒</span>
+            <input type="password" id="spass" placeholder="Min. 6 characters" />
+            <button type="button" class="eye" onclick="toggle('spass', this)">👁</button>
+          </div>
+          <div class="err" id="spasserr">Password must be at least 6 characters</div>
+        </div>
+
+        <!-- Terms and Conditions checkbox -->
+        <div class="checkrow">
+          <input type="checkbox" id="terms" />
+          <label for="terms">
+            I agree to EcoBite's <a href="#">Terms of Service</a>
+            and <a href="#">Privacy Policy</a>
+          </label>
+        </div>
+        <div class="err" id="termserr">Please accept the terms to continue</div>
+
+        <!-- Submit button -->
+        <button class="submit" type="submit">Create My Account</button>
+
+        <!-- OR divider -->
+        <div class="divider">or</div>
+
+        <!-- Google button -->
+        <button type="button" class="google" onclick="alert('Google signup coming soon!')">
+          <span style="font-size:20px">🌐</span> Continue with Google
+        </button>
+
+      </form>
+
+    </div><!-- end #box -->
+  </div><!-- end #right -->
+
+  <!-- ══ SUCCESS POPUP ══ -->
+  <!-- Shown after successful login/signup -->
+  <div id="popup">
+    <div id="popbox">
+      <div class="icon" id="popicon">🎉</div>
+      <h3 id="poptitle">You're in!</h3>
+      <p  id="popmsg">Welcome to EcoBite. Let's find you a great deal.</p>
+      <button id="popbtn" onclick="go()">Browse Food Deals →</button>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

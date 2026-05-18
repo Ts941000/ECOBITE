@@ -1,0 +1,453 @@
+﻿/* ── RESET ── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f4faf5;
+      color: #1a2e1a;
+    }
+
+    /* ════════════════════════
+       NAVBAR
+    ════════════════════════ */
+    #navbar {
+      background: white;
+      border-bottom: 1px solid #e0ece0;
+      padding: 0 32px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    #navbox {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center;
+      justify-content: space-between; height: 64px;
+    }
+    #logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 24px; font-weight: 800;
+      color: #1a2e1a; text-decoration: none;
+    }
+    #logo span { color: #2d9b5a; }
+
+    /* Breadcrumb: Home > Cart > Checkout */
+    #crumb {
+      display: flex; align-items: center;
+      gap: 8px; font-size: 14px; color: #8a9a8a;
+    }
+    .crumbstep { font-weight: 500; }
+    .crumbstep.on { color: #1a2e1a; font-weight: 700; }
+    .crumbarrow { color: #ccc; }
+
+    /* ════════════════════════
+       PAGE LAYOUT
+       Left side = cart items
+       Right side = order summary
+    ════════════════════════ */
+    #page {
+      max-width: 1100px; margin: 0 auto;
+      padding: 40px 24px;
+      display: flex; gap: 32px;
+      align-items: flex-start; /* items align to top */
+    }
+
+    /* Left column — cart items list */
+    #left { flex: 1; }
+
+    /* Right column — order summary + payment */
+    #right {
+      width: 360px;
+      flex-shrink: 0; /* don't shrink even if page is small */
+      position: sticky; top: 84px; /* sticks while you scroll left */
+    }
+
+    /* ── Section heading ── */
+    .sectitle {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px; font-weight: 800;
+      margin-bottom: 20px; letter-spacing: -0.5px;
+    }
+
+    /* ════════════════════════
+       CART ITEM CARDS
+    ════════════════════════ */
+    #cartlist { display: flex; flex-direction: column; gap: 16px; }
+
+    .citem {
+      background: white; border-radius: 18px;
+      padding: 20px; border: 1px solid #dceadc;
+      display: flex; align-items: center; gap: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s;
+    }
+    .citem:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.09); }
+
+    /* Food emoji on the left of each cart item */
+    .cemoji {
+      font-size: 52px;
+      width: 72px; height: 72px;
+      background: #f0f7f0; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Item details — name, hotel, time */
+    .cinfo { flex: 1; }
+    .cname { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+    .chotel { font-size: 13px; color: #8a9a8a; margin-bottom: 6px; }
+    .ctags { display: flex; gap: 8px; }
+    .ctag {
+      font-size: 11px; font-weight: 600;
+      border-radius: 100px; padding: 3px 10px;
+    }
+    .tagreen { background: #e8f7ee; color: #2d9b5a; }
+    .taorange { background: #fff3ed; color: #ff6b35; }
+
+    /* Price on the right */
+    .cprice { text-align: right; margin: 0 8px; }
+    .cnew {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px; font-weight: 800;
+    }
+    .cold {
+      font-size: 12px; color: #aaa;
+      text-decoration: line-through;
+    }
+    .csave { font-size: 12px; color: #2d9b5a; font-weight: 600; margin-top: 2px; }
+
+    /* Quantity +/- controls */
+    .cqty {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .qbtn {
+      width: 32px; height: 32px;
+      border-radius: 8px; border: 2px solid #dceadc;
+      background: white; font-size: 18px;
+      cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      font-weight: 700; color: #1a2e1a;
+      transition: all 0.15s;
+    }
+    .qbtn:hover { border-color: #2d9b5a; color: #2d9b5a; }
+    .qnum {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px; font-weight: 800;
+      min-width: 20px; text-align: center;
+    }
+
+    /* Remove item button */
+    .cremove {
+      background: #fff0f0; border: none;
+      border-radius: 10px; padding: 8px 10px;
+      cursor: pointer; font-size: 16px;
+      color: #d4531c; transition: background 0.2s;
+    }
+    .cremove:hover { background: #ffd6d6; }
+
+    /* Empty cart message */
+    #empty {
+      text-align: center; padding: 60px 20px;
+      background: white; border-radius: 18px;
+      border: 1px solid #dceadc; display: none;
+    }
+    #empty.show { display: block; }
+    #empty .eicon { font-size: 56px; margin-bottom: 16px; }
+    #empty p { color: #6b7b6b; font-size: 15px; margin-bottom: 20px; }
+    #shopbtn {
+      background: #2d9b5a; color: white;
+      border: none; border-radius: 12px;
+      padding: 12px 28px; font-weight: 700;
+      font-size: 14px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ════════════════════════
+       PICKUP INFO FORM
+       (shown below cart items)
+    ════════════════════════ */
+    #pickup {
+      background: white; border-radius: 18px;
+      padding: 24px; border: 1px solid #dceadc;
+      margin-top: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    #pickup h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px; font-weight: 800; margin-bottom: 18px;
+    }
+
+    /* Input group inside pickup form */
+    .pgroup { margin-bottom: 16px; }
+    .pgroup label {
+      display: block; font-size: 13px;
+      font-weight: 600; color: #3a4e3a; margin-bottom: 6px;
+    }
+    .pgroup input, .pgroup select {
+      width: 100%; border: 2px solid #d8ead8;
+      border-radius: 12px; padding: 12px 14px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif;
+      color: #1a2e1a; background: #f9fdf9;
+      outline: none; transition: border-color 0.2s;
+    }
+    .pgroup input:focus, .pgroup select:focus {
+      border-color: #2d9b5a; background: white;
+    }
+
+    /* Two inputs side by side */
+    .prow { display: flex; gap: 14px; }
+    .prow .pgroup { flex: 1; }
+
+    /* Error text under input */
+    .perr {
+      color: #d4531c; font-size: 12px;
+      margin-top: 4px; display: none;
+    }
+    .perr.show { display: block; }
+
+    /* ════════════════════════
+       RIGHT PANEL: ORDER SUMMARY
+    ════════════════════════ */
+    #summary {
+      background: white; border-radius: 18px;
+      padding: 24px; border: 1px solid #dceadc;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      margin-bottom: 16px;
+    }
+    #summary h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px; font-weight: 800; margin-bottom: 20px;
+    }
+
+    /* Each line in the order summary */
+    .sline {
+      display: flex; justify-content: space-between;
+      align-items: center; font-size: 14px;
+      margin-bottom: 12px; color: #4a5a4a;
+    }
+    .sline.bold {
+      font-weight: 700; color: #1a2e1a;
+      font-size: 15px;
+    }
+
+    /* Divider line inside summary */
+    .sdiv {
+      border: none; border-top: 1px solid #e8f0e8;
+      margin: 14px 0;
+    }
+
+    /* Total savings highlight box */
+    #savings {
+      background: #e8f7ee; border-radius: 12px;
+      padding: 12px 16px; margin: 16px 0;
+      display: flex; align-items: center; gap: 10px;
+    }
+    #savings span { font-size: 14px; font-weight: 600; color: #2d9b5a; }
+
+    /* ════════════════════════
+       COUPON CODE INPUT
+    ════════════════════════ */
+    #couponbox {
+      display: flex; gap: 10px; margin-bottom: 16px;
+    }
+    #couponinput {
+      flex: 1; border: 2px solid #d8ead8;
+      border-radius: 10px; padding: 10px 14px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif;
+      outline: none; background: #f9fdf9;
+      transition: border-color 0.2s;
+    }
+    #couponinput:focus { border-color: #2d9b5a; background: white; }
+    #applybtn {
+      background: #1a2e1a; color: white;
+      border: none; border-radius: 10px;
+      padding: 10px 16px; font-weight: 700;
+      font-size: 13px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      white-space: nowrap;
+    }
+    #couponmsg { font-size: 12px; margin-bottom: 12px; display: none; }
+    #couponmsg.good { display: block; color: #2d9b5a; font-weight: 600; }
+    #couponmsg.bad  { display: block; color: #d4531c; }
+
+    /* ════════════════════════
+       PAYMENT METHOD SELECTOR
+    ════════════════════════ */
+    #payment {
+      background: white; border-radius: 18px;
+      padding: 24px; border: 1px solid #dceadc;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    #payment h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px; font-weight: 800; margin-bottom: 16px;
+    }
+
+    /* Each payment option (UPI, Card, Cash) */
+    .payopt {
+      display: flex; align-items: center; gap: 14px;
+      border: 2px solid #dceadc; border-radius: 12px;
+      padding: 14px 16px; margin-bottom: 10px;
+      cursor: pointer; transition: all 0.2s;
+      background: #f9fdf9;
+    }
+    .payopt:hover { border-color: #2d9b5a; }
+    /* Selected payment method gets green border */
+    .payopt.on { border-color: #2d9b5a; background: #edf7ed; }
+
+    .payicon { font-size: 24px; }
+    .payname { font-weight: 600; font-size: 14px; }
+    .paysub { font-size: 12px; color: #8a9a8a; }
+
+    /* Custom radio circle */
+    .radio {
+      width: 18px; height: 18px;
+      border-radius: 50%; border: 2px solid #ccc;
+      margin-left: auto; display: flex;
+      align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .payopt.on .radio {
+      border-color: #2d9b5a; background: #2d9b5a;
+    }
+    .payopt.on .radio::after {
+      content: ""; width: 6px; height: 6px;
+      background: white; border-radius: 50%;
+    }
+
+    /* ── Place Order Button ── */
+    #orderbtn {
+      width: 100%; padding: 16px;
+      background: #2d9b5a; color: white;
+      border: none; border-radius: 14px;
+      font-size: 16px; font-weight: 700;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s, transform 0.1s;
+      display: flex; align-items: center;
+      justify-content: center; gap: 10px;
+    }
+    #orderbtn:hover { background: #24834c; }
+    #orderbtn:active { transform: scale(0.98); }
+    #orderbtn:disabled {
+      background: #aaccaa; cursor: not-allowed;
+    }
+
+    /* Security note below the button */
+    #secure {
+      text-align: center; font-size: 12px;
+      color: #8a9a8a; margin-top: 12px;
+    }
+
+    /* ════════════════════════
+       SUCCESS SCREEN
+       (full page, shown after order)
+    ════════════════════════ */
+    #success {
+      display: none;            /* hidden by default */
+      position: fixed; inset: 0;
+      background: #f4faf5;
+      z-index: 200;
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 32px;
+    }
+    #success.show { display: flex; }
+
+    #successbox {
+      background: white; border-radius: 28px;
+      padding: 52px 48px; max-width: 480px; width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      border: 1px solid #dceadc;
+    }
+    .sicon { font-size: 72px; margin-bottom: 20px; }
+    #successbox h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 30px; font-weight: 800;
+      margin-bottom: 10px;
+    }
+    #successbox p { color: #6b7b6b; font-size: 15px; line-height: 1.7; margin-bottom: 28px; }
+
+    /* Order summary inside success screen */
+    #orderinfo {
+      background: #f0f7f0; border-radius: 14px;
+      padding: 20px; margin-bottom: 28px; text-align: left;
+    }
+    .oline {
+      display: flex; justify-content: space-between;
+      font-size: 14px; margin-bottom: 8px; color: #3a5a3a;
+    }
+    .oline b { color: #1a2e1a; }
+
+    #backhome {
+      background: #2d9b5a; color: white;
+      border: none; border-radius: 12px;
+      padding: 14px 36px; font-weight: 700;
+      font-size: 15px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    #backhome:hover { background: #24834c; }
+
+    /* ── TOAST NOTIFICATION ── */
+    #toast {
+      position: fixed; bottom: 28px; right: 28px;
+      background: #1a2e1a; color: white;
+      border-radius: 12px; padding: 14px 20px;
+      font-size: 14px; font-weight: 600;
+      display: flex; align-items: center; gap: 10px;
+      transform: translateY(80px); opacity: 0;  /* hidden below screen */
+      transition: all 0.3s; z-index: 300;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #page { flex-direction: column; padding: 24px 16px; gap: 20px; }
+      #right { width: 100%; position: static; }
+    }
+
+    @media (max-width: 768px) {
+      /* NAVBAR */
+      #navbar { padding: 0 16px; }
+      #navbox { flex-wrap: wrap; gap: 4px; height: auto; padding: 10px 0; }
+      #logo { font-size: 20px; }
+      #crumb { font-size: 11px; gap: 4px; }
+      .crumbstep { font-size: 11px; }
+      .crumbarrow { font-size: 11px; }
+
+      /* PAGE */
+      #page { padding: 16px 12px; gap: 16px; }
+
+      /* CART ITEMS */
+      .citem {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 14px;
+        align-items: flex-start;
+      }
+      .cemoji { width: 56px; height: 56px; font-size: 38px; border-radius: 10px; }
+      .cinfo { flex: 1 1 160px; min-width: 0; }
+      .cname { font-size: 14px; }
+      .chotel { font-size: 12px; }
+      .cprice { margin: 0; text-align: left; }
+      .cnew { font-size: 18px; }
+      .cqty { margin-left: auto; }
+
+      /* PICKUP FORM */
+      .prow { flex-direction: column; gap: 0; }
+
+      /* SECTION TITLE */
+      .sectitle { font-size: 18px; }
+
+      /* SUMMARY */
+      #summary, #payment, #pickup { padding: 18px; }
+
+      /* TOAST */
+      #toast { bottom: 16px; right: 12px; left: 12px; font-size: 13px; }
+
+      /* SUCCESS */
+      #successbox { padding: 32px 24px; }
+    }
+
+    @media (max-width: 400px) {
+      .ctags { flex-wrap: wrap; }
+      #crumb { display: none; }
+      .citem { padding: 12px; }
+    }
