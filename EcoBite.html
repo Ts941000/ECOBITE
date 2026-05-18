@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EcoBite</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/EcoBite.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div id="navbox">
+    <a href="#" id="logo">🌿 Eco<span>Bite</span></a>
+    <div id="links">
+      <a href="#how">How It Works</a>
+      <a href="#">Hotels</a>
+      <a href="#">About</a>
+      <!-- Clicking "List Your Hotel" goes to the Hotel login/signup -->
+      <a href="login.html" id="partner">List Your Hotel</a>
+    </div>
+    <div id="right">
+      <button id="cart" onclick="window.location.href='cart.html'">🛒 <span id="count">0</span></button>
+      <button id="loginbtn" onclick="window.location.href='login.html'">Login</button>
+      <button id="hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+<div id="mobileMenu">
+  <a href="#how" onclick="toggleMenu()">How It Works</a>
+  <a href="#" onclick="toggleMenu()">Hotels</a>
+  <a href="#" onclick="toggleMenu()">About</a>
+  <a href="login.html" id="mPartner">List Your Hotel</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div id="blob1"></div>
+  <div id="blob2"></div>
+  <div id="herobox">
+    <div id="heroleft">
+      <div id="pill">🇮🇳 Now in 32 cities across India</div>
+      <h1 id="title">Great Food.<br><span>Half the Price.</span><br>Zero Waste.</h1>
+      <p id="sub">EcoBite rescues surplus meals from India's finest hotels — so you eat well, save money, and help the planet.</p>
+      <div id="searchbox">
+        <span>📍</span>
+        <input type="text" id="search" placeholder="Search food or hotel..." />
+        <button id="findbtn" onclick="goto()">Find Food</button>
+      </div>
+      <div id="badges">
+        <span class="badge">🌱 Eco Certified</span>
+        <span class="badge">⚡ Same-day Pickup</span>
+        <span class="badge">💳 UPI &amp; Cards</span>
+      </div>
+    </div>
+    <div id="heroright">
+      <div class="card1">
+        <span style="font-size:32px">🍛</span>
+        <div>
+          <div style="font-size:13px;font-weight:600">Butter Chicken Thali</div>
+          <div><span class="old">₹450</span> <span class="price">₹99</span></div>
+        </div>
+      </div>
+      <div class="card2">
+        <span style="font-size:26px">🌍</span>
+        <span>12 kg food saved today</span>
+      </div>
+      <div id="plate">🥘</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div id="stats">
+  <div class="stat"><span style="font-size:24px">🍽️</span><span class="statnum">2.4L+</span><span class="statlabel">Meals Saved</span></div>
+  <div class="stat"><span style="font-size:24px">🏨</span><span class="statnum">840+</span><span class="statlabel">Partner Hotels</span></div>
+  <div class="stat"><span style="font-size:24px">💰</span><span class="statnum">₹18Cr</span><span class="statlabel">Customer Savings</span></div>
+  <div class="stat"><span style="font-size:24px">🇮🇳</span><span class="statnum">32 Cities</span><span class="statlabel">Across India</span></div>
+</div>
+
+<!-- LISTINGS -->
+<section id="listings">
+  <div id="top">
+    <div>
+      <h2 id="heading">Today's Rescue Deals</h2>
+      <p id="subheading">Fresh surplus meals available for pickup tonight</p>
+    </div>
+    <div id="live">🔴 Live Now</div>
+  </div>
+
+  <!-- FILTERS -->
+  <div id="filters">
+    <div id="citygroup"></div>
+    <div id="catgroup"></div>
+  </div>
+
+  <!-- FOOD GRID -->
+  <div id="grid"></div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div id="howbox">
+    <h2 id="howtitle">How EcoBite Works</h2>
+    <p id="howsub">Simple. Fast. Sustainable.</p>
+    <div id="steps">
+      <div class="step"><div class="stepnum">01</div><div class="stepicon">🔍</div><div class="steptitle">Browse Deals</div><div class="stepdesc">Find surplus meals from top hotels near you at up to 80% off</div></div>
+      <div class="step"><div class="stepnum">02</div><div class="stepicon">🛒</div><div class="steptitle">Place Order</div><div class="stepdesc">Pick your meal, pay securely via UPI, card, or wallet</div></div>
+      <div class="step"><div class="stepnum">03</div><div class="stepicon">🏃</div><div class="steptitle">Pickup &amp; Enjoy</div><div class="stepdesc">Head to the hotel within the pickup window and grab your meal</div></div>
+      <div class="step"><div class="stepnum">04</div><div class="stepicon">🌍</div><div class="steptitle">Save the Planet</div><div class="stepdesc">Every meal saved = less food waste = a better India</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div id="footbox">
+    <div id="footlogo">🌿 Eco<span>Bite</span></div>
+    <p id="footsub">Fighting food waste, one meal at a time.</p>
+    <div id="footlinks">
+      <a href="#">About</a><a href="#">Careers</a><a href="#">Press</a>
+      <a href="#">Blog</a><a href="#">Contact</a><a href="#">Privacy</a>
+    </div>
+    <div id="copy">© 2026 EcoBite India Pvt. Ltd. Made with 💚 for a sustainable India</div>
+  </div>
+</footer>
+
+<script src="js/EcoBite.js"></script>
+</body>
+</html>
